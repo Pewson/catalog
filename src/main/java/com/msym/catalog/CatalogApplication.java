@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.List;
 import java.util.Scanner;
 
 @SpringBootApplication
@@ -23,16 +24,25 @@ public class CatalogApplication implements CommandLineRunner {
         SpringApplication.run(CatalogApplication.class, args);
     }
 
+    public static Integer menu(){
+        System.out.println();
+        System.out.println("     ****************************************");
+        System.out.println("     *                 MENU                 *");
+        System.out.println("     ****************************************");
+        System.out.println("     1. Add new hat");
+        System.out.println("     2. Print all hats");
+        System.out.println("     0. Exit");
+
+        Scanner in = new Scanner(System.in);
+        Integer w = in.nextInt();
+        return w;
+    }
+
     @Override
     public void run(String... args) throws Exception {
-        boolean menu = true;
-        Integer choice = -1;
         Scanner scanner = new Scanner(System.in);
-        while (menu = true) {
-            System.out.println("1 - Add new hat");
-            System.out.println("2 - Exit");
-        choice = scanner.nextInt();
-
+        Integer choice = menu();
+        while (choice != 0) {
             switch (choice) {
                 case 1:
                     Hat hat = new Hat();
@@ -57,15 +67,16 @@ public class CatalogApplication implements CommandLineRunner {
                     clothingRepository.save(hat);
                     break;
                 case 2:
-                    menu = false;
+                    List<Hat> list= clothingRepository.findAll();
+                    for (Hat x:list){
+                        System.out.println(x);
+                    }
                     break;
                 default:
                     System.out.println("Wrong input");
                     break;
-                case 3:
-                    clothingRepository.findAll();
-                    break;
             }
+            choice = menu();
 
         }
     }
