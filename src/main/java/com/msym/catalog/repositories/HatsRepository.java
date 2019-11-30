@@ -1,8 +1,9 @@
 package com.msym.catalog.repositories;
 
-import com.msym.catalog.clothing.Clothing;
 import com.msym.catalog.clothing.Hat;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ClothingRepository extends MongoRepository<Hat,String> {
+@Repository
+public interface HatsRepository extends MongoRepository<Hat, String> {
 }

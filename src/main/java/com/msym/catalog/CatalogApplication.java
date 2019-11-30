@@ -1,36 +1,41 @@
 package com.msym.catalog;
 
 import com.msym.catalog.clothing.Hat;
-import com.msym.catalog.repositories.ClothingRepository;
+import com.msym.catalog.clothing.Shirt;
+import com.msym.catalog.repositories.HatsRepository;
+import com.msym.catalog.services.HatService;
+import com.msym.catalog.services.ShirtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.List;
 import java.util.Scanner;
 
 @SpringBootApplication
 public class CatalogApplication implements CommandLineRunner {
 
-    private ClothingRepository clothingRepository;
-
+    private HatService hatService;
+    private ShirtService shirtService;
     @Autowired
-    CatalogApplication(ClothingRepository clothingRepository) {
-        this.clothingRepository = clothingRepository;
+    CatalogApplication(HatService hatService, ShirtService shirtService) {
+        this.hatService = hatService;
+        this.shirtService = shirtService;
     }
 
     public static void main(String[] args) {
         SpringApplication.run(CatalogApplication.class, args);
     }
 
-    public static Integer menu(){
+    public static Integer menu() {
         System.out.println();
         System.out.println("     ****************************************");
         System.out.println("     *                 MENU                 *");
         System.out.println("     ****************************************");
         System.out.println("     1. Add new hat");
-        System.out.println("     2. Print all hats");
+        System.out.println("     2. Add new shirt");
+        System.out.println("     3. Show all hats");
+        System.out.println("     4. Show all shirts");
         System.out.println("     0. Exit");
 
         Scanner in = new Scanner(System.in);
@@ -40,6 +45,8 @@ public class CatalogApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
+        //simple testing menu
         Scanner scanner = new Scanner(System.in);
         Integer choice = menu();
         while (choice != 0) {
@@ -47,28 +54,44 @@ public class CatalogApplication implements CommandLineRunner {
                 case 1:
                     Hat hat = new Hat();
                     System.out.println("Type in brand of the hat");
-                    String str = scanner.next();
-                    hat.setBrand(str);
+                    hat.setBrand(scanner.next());
                     System.out.println("Type in collection of the hat");
-                    str = scanner.next();
-                    hat.setCollection(str);
+                    hat.setCollection(scanner.next());
                     System.out.println("Type in Catalog Index of the hat");
-                    str = scanner.next();
-                    hat.setCatalog_indx(str);
+                    hat.setCatalog_indx(scanner.next());
                     System.out.println("Type in purchase price(netto) of the hat");
-                    Float flt = scanner.nextFloat();
-                    hat.setPurch_price_netto(flt);
+                    hat.setPurch_price_netto(scanner.nextFloat());
                     System.out.println("Type in selling price(netto) of the hat");
-                    flt = scanner.nextFloat();
-                    hat.setSell_price_netto(flt);
+                    hat.setSell_price_netto(scanner.nextFloat());
                     System.out.println("Type in amount");
-                    str = scanner.next();
-                    hat.setAmount_left(Integer.parseInt(str));
-                    clothingRepository.save(hat);
+                    hat.setAmount_left(Integer.parseInt(scanner.next()));
+                    hatService.saveHat(hat);
                     break;
                 case 2:
-                    List<Hat> list= clothingRepository.findAll();
-                    for (Hat x:list){
+                    Shirt shirt= new Shirt();
+                    System.out.println("Type in brand of the shirt");
+                    shirt.setBrand(scanner.next());
+                    System.out.println("Type in collection of the shirt");
+                    shirt.setCollection(scanner.next());
+                    System.out.println("Type in Catalog Index of the shirt");
+                    shirt.setCatalog_indx(scanner.next());
+                    System.out.println("Type in purchase price(netto) of the shirt");
+                    shirt.setPurch_price_netto(scanner.nextFloat());
+                    System.out.println("Type in selling price(netto) of the shirt");
+                    shirt.setSell_price_netto(scanner.nextFloat());
+                    System.out.println("Type in amount");
+                    shirt.setAmount_left(Integer.parseInt(scanner.next()));
+                    System.out.println("Is shirt longsleeve? true/false");
+                    shirt.setLongSleeve(scanner.nextBoolean());
+                    shirtService.saveShirt(shirt);
+                    break;
+                case 3:
+                    for (Hat x : hatService.findAll()) {
+                        System.out.println(x);
+                    }
+                    break;
+                case 4:
+                    for (Shirt x : shirtService.findAll()) {
                         System.out.println(x);
                     }
                     break;

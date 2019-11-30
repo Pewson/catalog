@@ -1,9 +1,8 @@
 package com.msym.catalog.clothing;
 
-
 import org.springframework.data.annotation.Id;
 
-public class Hat {
+public class Shirt {
     @Id
     private String id;
     private String brand;
@@ -12,17 +11,19 @@ public class Hat {
     private float purch_price_netto;
     private float sell_price_netto;
     private Integer amount_left;
+    private boolean isLongSleeve;
 
-    public Hat(String brand, String collection, String catalog_indx, float purch_price_netto, float sell_price_netto, Integer amount_left) {
+    public Shirt(String brand, String collection, String catalog_indx, float purch_price_netto, float sell_price_netto, Integer amount_left, boolean isLongSleeve) {
         this.brand = brand;
         this.collection = collection;
         this.catalog_indx = catalog_indx;
         this.purch_price_netto = purch_price_netto;
         this.sell_price_netto = sell_price_netto;
         this.amount_left = amount_left;
+        this.isLongSleeve = isLongSleeve;
     }
 
-    public Hat() {
+    public Shirt() {
     }
 
     public String getBrand() {
@@ -73,9 +74,17 @@ public class Hat {
         this.amount_left = amount_left;
     }
 
+    public boolean isLongSleeve() {
+        return isLongSleeve;
+    }
+
+    public void setLongSleeve(boolean longSleeve) {
+        isLongSleeve = longSleeve;
+    }
+
     @Override
     public String toString() {
-        return "Hat{" +
+        return "Shirt{" +
                 "id='" + id + '\'' +
                 ", brand='" + brand + '\'' +
                 ", collection='" + collection + '\'' +
@@ -83,6 +92,7 @@ public class Hat {
                 ", purch_price_netto=" + purch_price_netto +
                 ", sell_price_netto=" + sell_price_netto +
                 ", amount_left=" + amount_left +
+                ", isLongSleeve=" + isLongSleeve +
                 '}';
     }
 }
